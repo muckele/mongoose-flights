@@ -20,8 +20,7 @@ const flightSchema = new Schema({
     validate: {
       validator: function(value) {
         return value >= 10 && value <= 9999
-      },
-      message: 'FlightNo must be between 10 and 9999'
+      }
     },
   },
   departs: {
@@ -32,3 +31,9 @@ const flightSchema = new Schema({
     min: 2024
   }
 })
+
+const Flight = mongoose.model('Flight', flightSchema)
+
+export {
+  Flight
+}
