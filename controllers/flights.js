@@ -6,6 +6,20 @@ function newFlight(req, res) {
   })
 }
 
+function show(req, res) {
+  Flight.findById(req.params.movieId)
+  .then(flight => {
+    res.render('flight/show', { 
+      title: 'Flight Details', 
+      flight: flight,
+    })    
+  })
+  .catch(err => {
+    console.log(err)
+    res.redirect("/")
+  })
+}
+
 function create(req, res) {
   Flight.create(req.body)
   .then(flight => {
@@ -31,8 +45,21 @@ function index(req, res) {
   })
 }
 
+function deleteFlight(req, res) {
+  Flight.findByIdAndDelete(req.params.movieId)
+  .then(flight => {
+    res.redirect("/flights")
+  })
+  .catch(err => {
+    console.log(err)
+    res.redirect("/flights")
+  })
+}
+
 export {
-  newFlight as new, 
+  newFlight as new,
+  show, 
   create, 
-  index
+  index,
+  deleteFlight as delete
 }

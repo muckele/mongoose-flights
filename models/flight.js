@@ -8,7 +8,7 @@ const flightSchema = new Schema({
     enum: ['American', 'Southwest', 'United', 'Delta'],
     required: true
   },
-  aiport: {
+  airport: {
     type: String,
     enum: ['AUS', 'DFW', 'DEN', 'LAX', 'SAN', 'JFK'],
     default: 'DEN'
@@ -16,18 +16,14 @@ const flightSchema = new Schema({
   flightNo: {
     type: Number,
     required: true,
-    validate: {
-      validator: function(value) {
-        return value >= 10 && value <= 9999
-      }
-    },
+    min: 10,
+    max: 9999
   },
   departs: {
-    type: Number,
-    default: function() {
+    type: Date,
+    default: function () {
       return new Date().getFullYear()
-    },
-    min: 2024
+    }
   }
 }, {
   timestamps: true
