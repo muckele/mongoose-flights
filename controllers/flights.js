@@ -7,9 +7,9 @@ function newFlight(req, res) {
 }
 
 function show(req, res) {
-  Flight.findById(req.params.movieId)
+  Flight.findById(req.params.flightId)
   .then(flight => {
-    res.render('flight/show', { 
+    res.render('flights/show', { 
       title: 'Flight Details', 
       flight: flight,
     })    
@@ -46,7 +46,7 @@ function index(req, res) {
 }
 
 function deleteFlight(req, res) {
-  Flight.findByIdAndDelete(req.params.movieId)
+  Flight.findByIdAndDelete(req.params.flightId)
   .then(flight => {
     res.redirect("/flights")
   })
@@ -56,10 +56,37 @@ function deleteFlight(req, res) {
   })
 }
 
+function edit(req, res) {
+  Flight.findById(req.params.flightId)
+  .then(flight => {
+    res.render("flights/edit", {
+      flight,
+      title: "Edit Flight"
+    })
+  })
+  .catch(err => {
+    console.log(err)
+    res.redirect("/flights")
+  })
+}
+
+function update(req, res) {
+  Flight.findByIdAndUpdate(req.params.flightId, req.body, {new: true})
+  .then(flight => {
+    res.redirect(`/flights/${flight.id}`)
+  })
+  .catch(err => {
+    console.log(err)
+    res.redirect("/")
+  })
+}
+
 export {
   newFlight as new,
   show, 
   create, 
   index,
-  deleteFlight as delete
+  deleteFlight as delete, 
+  edit,
+  update
 }
