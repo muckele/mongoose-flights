@@ -18,6 +18,7 @@ router.get("/:flightId/edit", flightsCtrl.edit)
 // localhost:3000/flights/:flightId
 router.put("/:flightId", flightsCtrl.update)
 router.post('/:flightId/tickets', flightsCtrl.createTicket)
+router.post('/:flightId/meals', flightsCtrl.addToFlight)
 
 
 export { router }

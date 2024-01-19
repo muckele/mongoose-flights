@@ -5,9 +5,9 @@
 <main>
 	<h1><%= title %></h1>
   <p>Please first ensure that the meal is not in the dropdown
-    <select>
+    <select id="meal-select">
       <% meals.forEach(function(meal) { %>
-        <option><%= meal.name %></option>
+        <option><%= meal.meal %></option>
       <% }) %>
     </select>
   </p>
