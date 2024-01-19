@@ -71,6 +71,10 @@ function edit(req, res) {
 }
 
 function update(req, res) {
+  req.body.flightNo = !!req.body.FlightNo
+  for (let key in req.body) {
+    if(req.body[key] === "") delete req.body[key]
+  }
   Flight.findByIdAndUpdate(req.params.flightId, req.body, {new: true})
   .then(flight => {
     res.redirect(`/flights/${flight.id}`)
@@ -81,6 +85,28 @@ function update(req, res) {
   })
 }
 
+function createTicket(req, res) {
+  Flight.findById(req.params.flightId)
+  .then(flight => {
+    flight.tickets.push(req.body)
+    flight.save()
+    .then(() => {
+      res.redirect(`/flights/${req.params.flightid}`)
+    })
+    .catch(err => {
+      console.log(err)
+      res.redirect('/flights')
+    })
+  })
+  .catch(err => {
+    console.log(err)
+    res.redirect('/flights')
+  })
+}
+
+
+
+
 export {
   newFlight as new,
   show, 
@@ -88,5 +114,7 @@ export {
   index,
   deleteFlight as delete, 
   edit,
-  update
+  update,
+  createTicket
+
 }
